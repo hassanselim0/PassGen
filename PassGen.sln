@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassGen-WPF", "PassGen-WPF\PassGen-WPF.csproj", "{D992CED9-6EB3-4139-8C06-983F8B3901E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassGen-Core", "PassGen-Core\PassGen-Core.csproj", "{D992CED9-6EB3-4139-8C06-983F8B3901E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

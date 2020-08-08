@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PassGen
+namespace PassGenCore
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -24,7 +24,7 @@ namespace PassGen
 
             if (e.Args.Length == 2)
             {
-                PassGen.MainWindow.GetPass(e.Args[0], e.Args[1]);
+                PassGenCore.MainWindow.GetPass(e.Args[0], e.Args[1]);
                 Shutdown();
             }
 
