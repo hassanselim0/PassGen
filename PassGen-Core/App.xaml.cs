@@ -22,12 +22,6 @@ namespace PassGenCore
                 StartingList = e.Args[0];
             }
 
-            if (e.Args.Length == 2)
-            {
-                PassGenCore.MainWindow.GetPass(e.Args[0], e.Args[1]);
-                Shutdown();
-            }
-
             base.OnStartup(e);
         }
     }
