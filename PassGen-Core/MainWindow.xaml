@@ -18,12 +18,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" Text="Master Password:" />
-        <PasswordBox Grid.Row="0" Grid.Column="1" Margin="4" Name="MasterBox" />
-
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" Text="Key List:" />
-        <ComboBox Grid.Row="1" Grid.Column="1" Margin="4" Name="KeyListsCombo" IsEditable="True"
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" Text="Key List:" />
+        <ComboBox Grid.Row="0" Grid.Column="1" Margin="4" Name="KeyListsCombo" IsEditable="True"
                   SelectionChanged="KeyListsCombo_SelectionChanged" KeyUp="KeyListsCombo_KeyUp" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" Text="Master Password:" />
+        <PasswordBox Grid.Row="1" Grid.Column="1" Margin="4" Name="MasterBox" />
 
         <TextBlock Grid.Row="2" Grid.Column="0" Margin="4" Text="Key:" />
         <ComboBox Grid.Row="2" Grid.Column="1" Margin="4" Name="KeysCombo" IsEditable="True"
