@@ -1,0 +1,1 @@
+{"Master": {"Hash": "iW1VFYWsCf20F9uCVKy+xiZg3Dx9+U6vhZcdaPLcHgw=", "Salt": "SWM4psr0po5UVU+eGBTgJ2D406hAQ3a1NxOCILXd7/s=", "IterCount": 1000}, "Version": 1, "Keys": [{"Label": "somelabel", "GenMode": "Base64", "MaxLength": 5}, {"Label": "anotherlabel", "GenMode": "Base64", "MaxLength": null}, {"Label": "onemorelabel", "GenMode": "AlphaNum", "MaxLength": null}]}
