@@ -1,0 +1,22 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish Python Package
+      uses: mariamrf/py-package-publish-action@v2
+      with:
+        python_version: '3.6.0'
+        subdir: 'passgen-py'
+      env:
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
