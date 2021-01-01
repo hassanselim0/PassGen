@@ -39,6 +39,8 @@ namespace PassGenCore
             KeyListsCombo.Text = keyListName = App.StartingList ?? "Default";
 
             MasterBox.Focus();
+
+            LoadList();
         }
 
         private void KeyListsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
