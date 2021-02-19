@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,8 +32,8 @@ namespace PassGenCore
                 Converters = new List<JsonConverter> { new StringEnumConverter() },
             };
 
-            var keyLists = Directory.EnumerateFiles(".", "*.keys")
-                .Select(f => Path.GetFileNameWithoutExtension(f)).ToList();
+            var keyLists = Directory.EnumerateFiles(".", "*.keys.json")
+                .Select(f => Path.GetFileName(f.Replace(".keys.json", "")));
 
             KeyListsCombo.ItemsSource = keyLists;
             KeyListsCombo.Text = keyListName = App.StartingList ?? "Default";
