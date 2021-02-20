@@ -39,7 +39,7 @@ def init(master_password, iter_count, keylist_path):
     '-p', '--master-password',
     prompt=True, hide_input=True, type=str)
 @click.option(
-    '-l', '--label', help='Case-insensitive label for passwords.',
+    '-l', '--label', help='Case-sensitive label for passwords.',
     prompt=True)
 @click.option(
     '-kp', '--keylist-path',
@@ -49,7 +49,6 @@ def generate(master_password, label, keylist_path):
     keylist = utils.load_keylist(keylist_path)
     abort_if_incorrect_master(master_password, keylist, keylist_path)
 
-    label = label.lower()
     key = keylist.get_key(label)
     if key is None:
         max_length = click.prompt('Max Length', type=int, default=-1)
@@ -72,7 +71,7 @@ def generate(master_password, label, keylist_path):
     '-p', '--master-password',
     prompt=True, hide_input=True, type=str)
 @click.option(
-    '-l', '--label', help='Case-insensitive label for passwords.',
+    '-l', '--label', help='Case-sensitive label for passwords.',
     prompt=True)
 @click.option(
     '-kp', '--keylist-path',
@@ -82,8 +81,6 @@ def generate(master_password, label, keylist_path):
 def reset(ctx, master_password, label, keylist_path):
     keylist = utils.load_keylist(keylist_path)
     abort_if_incorrect_master(master_password, keylist, keylist_path)
-
-    label = label.lower()
 
     keylist.remove_key(label)
     utils.save_keylist(keylist_path, keylist)

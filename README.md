@@ -11,6 +11,10 @@ I then added some convenience features, like storing the list of keys which is d
 
 You can still use this tool along with a regular password manager (for mobile sync), it would replace the manager's random password generation, and you would still get the benefit of always having access to your passwords regardless of the manager's availability.
 
+## Download
+- Windows: Check [Releases Page](https://github.com/hassanselim0/PassGen/releases/latest)
+- Linux/MacOS: `pip install passgen-py`
+
 ## FAQ
 - **Q: Isn't storing a hash of the master password a bad idea?**
 - A: It's the old security vs convenience balance, also the hash is generated using salted PBKDF2 HMAC-SHA256 (in v2 keylists). However I do intend to add the ability to disable that convenience.
@@ -25,7 +29,7 @@ You can still use this tool along with a regular password manager (for mobile sy
 - **Q: Android Version?**
 - A: I initially wanted to build an Android version for this tool, but I gave up and used a password manager for the few passwords that I use on my phone, feel free to build your own and ping me.
 - **Q: Linux Version?**
-- A: I do have a very rough python script that reads the keylist file and generates passwords, but it obviously lacks a lot of convenience features. I might add it to this repo or as a gist.
+- A: Yes! Thanks to @mariamrf there is now a Python CLI version of PassGen that can run anywhere where Python runs!
 - **Q: This code is ugly and doesn't use MVVM!**
 - A: This is a hobby-project initially made for personal use, very few hours were put into the first version of this.
 - **Q: I don't see a value in this tool.**

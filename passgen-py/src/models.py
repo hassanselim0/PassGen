@@ -2,7 +2,7 @@ import json
 
 
 class KeyList:
-    def __init__(self, master, keys=[], version=1):
+    def __init__(self, master, keys=[], version=2):
         self.master = master
         self.version = version
         self.keys = keys
