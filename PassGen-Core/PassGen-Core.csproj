@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.1</Version>
     <RootNamespace>PassGenCore</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

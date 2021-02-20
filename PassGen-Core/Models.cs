@@ -5,7 +5,9 @@ namespace PassGenCore
 {
     public class KeyList
     {
-        public int Version { get; set; } = 1;
+        public const int CurrVersion = 2;
+
+        public int Version { get; set; } = CurrVersion;
 
         public MasterPassword Master { get; } = new MasterPassword();
 

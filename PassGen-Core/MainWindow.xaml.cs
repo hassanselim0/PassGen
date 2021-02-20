@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,24 +39,24 @@ namespace PassGenCore
 
             MasterBox.Focus();
 
-            LoadList();
+            loadList();
         }
 
         private void KeyListsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             keyListName = (sender as ComboBox)?.SelectedValue as string;
 
-            LoadList();
+            loadList();
         }
 
         private void KeyListsCombo_KeyUp(object sender, KeyEventArgs e)
         {
             keyListName = (sender as ComboBox)?.Text as string;
 
-            LoadList();
+            loadList();
         }
 
-        private void LoadList()
+        private void loadList()
         {
             var legacyPath = keyListPath.Replace(".keys.json", ".keys");
             if (File.Exists(keyListPath))
@@ -93,7 +92,7 @@ namespace PassGenCore
                     keyList.Keys.Add(key);
                 }
 
-            try { GeneratePass(MasterBox.Password, key); }
+            try { generatePass(MasterBox.Password, key); }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
         }
 
@@ -107,15 +106,12 @@ namespace PassGenCore
             File.WriteAllText(keyListPath, JsonConvert.SerializeObject(keyList));
         }
 
-        private void GeneratePass(string master, Key key)
+        private void generatePass(string master, Key key)
         {
-            if (!CheckMaster(master))
+            if (!checkMaster(master))
             {
-                var answer = MessageBox.Show(
-                    "Master Password check missmatch!\r\nGenerate anyways?",
-                    "Error", MessageBoxButton.YesNo);
-                if (answer != MessageBoxResult.Yes)
-                    return;
+                MessageBox.Show("Master Password check missmatch!", "Error", MessageBoxButton.OK);
+                return;
             }
 
             var bytes = new HMACSHA256(master.ToUTF8()).ComputeHash(key.Label.ToUTF8());
@@ -124,7 +120,7 @@ namespace PassGenCore
             {
                 GenMode.Base64 => bytes.ToBase64(),
                 GenMode.AlphaNum => bytes.ToBase64().Replace("/", "").Replace("+", "").Replace("=", ""),
-                _ => throw new Exception("Unexepected GenMode"),
+                _ => throw new Exception("Unexpected GenMode"),
             };
 
             if (key.MaxLength != null)
@@ -134,53 +130,63 @@ namespace PassGenCore
             MessageBox.Show("Copied to Clipboard!", "Done!");
         }
 
-        private bool CheckMaster(string master)
+        private bool checkMaster(string input)
         {
-            var masterBytes = master.ToUTF8();
-
             // Get Salt Bytes or Generate new one
-            byte[] salt;
             if (keyList.Master.Salt is null)
             {
-                salt = new byte[32];
+                var salt = new byte[32];
                 new RNGCryptoServiceProvider().GetBytes(salt);
                 keyList.Master.Salt = salt.ToBase64();
             }
-            else
-                salt = keyList.Master.Salt.FromBase64();
 
             // Compute Input Master Hash
-            var sha = SHA256.Create();
-            var hash = new byte[0];
-            for (var i = 0; i < keyList.Master.IterCount; i++)
-                hash = sha.ComputeHash(ConcatBuffers(hash, masterBytes, salt));
-
-            var hashB64 = hash.ToBase64();
-
-            // Backward Compatibility for text-based Key Files
-            if (keyList.Version == 0)
-            {
-                var legacyHash = keyList.Master.Hash;
-
-                // Migrate Master Key
-                keyList.Version = 1;
-                keyList.Master.Hash = hashB64;
-
-                var hashedInput = new HMACSHA256(masterBytes).ComputeHash("CHECK".ToUTF8()).ToBase64();
-                return hashedInput == legacyHash;
-            }
+            var inputHash = this.computeMasterHash(input);
 
             // If this is a new Key List, save the Hash and return true
             if (keyList.Master.Hash is null)
             {
-                keyList.Master.Hash = hashB64;
+                keyList.Master.Hash = inputHash;
                 return true;
             }
 
-            return hashB64 == keyList.Master.Hash;
+            if (keyList.Version < KeyList.CurrVersion)
+            {
+                var legacyHash = keyList.Master.Hash;
+
+                keyList.Version = KeyList.CurrVersion;
+                keyList.Master.Hash = this.computeMasterHash(input);
+
+                return inputHash == legacyHash;
+            }
+
+            return inputHash == keyList.Master.Hash;
         }
 
-        private byte[] ConcatBuffers(params byte[][] buffers)
+        private string computeMasterHash(string input)
+        {
+            var inputBytes = input.ToUTF8();
+            var salt = keyList.Master.Salt.FromBase64();
+            var iters = keyList.Master.IterCount;
+
+            if (keyList.Version is 0)
+                return new HMACSHA256(inputBytes).ComputeHash("CHECK".ToUTF8()).ToBase64();
+
+            if (keyList.Version is 1)
+            {
+                var sha = SHA256.Create();
+                return Enumerable.Range(0, iters).Aggregate(new byte[0], (hash, _) =>
+                    sha.ComputeHash(concatBuffers(hash, inputBytes, salt))).ToBase64();
+            }
+
+            if (keyList.Version is 2)
+                return new Rfc2898DeriveBytes(inputBytes, salt, iters,
+                    HashAlgorithmName.SHA256).GetBytes(256 / 8).ToBase64();
+
+            throw new Exception("Unexpected Version");
+        }
+
+        private byte[] concatBuffers(params byte[][] buffers)
         {
             var result = new byte[buffers.Sum(b => b.Length)];
             var offset = 0;
