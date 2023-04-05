@@ -9,11 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/PassGen-Core/bin/Debug/netcoreapp3.1/PassGen-Core.dll",
+            "program": "${workspaceFolder}/PassGen-Core/bin/Debug/net6.0-windows/PassGen-Core.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/PassGen-Core/bin/Debug/netcoreapp3.1/",
+            "cwd": "${workspaceFolder}/PassGen-Core/bin/Debug/net6.0-windows/",
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
         },
         {
             "name": ".NET Core Attach",

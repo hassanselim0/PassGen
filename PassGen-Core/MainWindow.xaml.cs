@@ -135,8 +135,7 @@ namespace PassGenCore
             // Get Salt Bytes or Generate new one
             if (keyList.Master.Salt is null)
             {
-                var salt = new byte[32];
-                new RNGCryptoServiceProvider().GetBytes(salt);
+                var salt = RandomNumberGenerator.GetBytes(32);
                 keyList.Master.Salt = salt.ToBase64();
             }
 
