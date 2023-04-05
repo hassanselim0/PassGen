@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PassGenCore;
 
@@ -11,7 +12,7 @@ public class KeyList
 
     public MasterPassword Master { get; } = new MasterPassword();
 
-    public List<Key> Keys { get; } = new();
+    public ObservableCollection<Key> Keys { get; } = new();
 }
 
 public class MasterPassword

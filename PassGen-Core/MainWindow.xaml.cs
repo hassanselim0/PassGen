@@ -71,7 +71,8 @@ public partial class MainWindow : Window
             keyList = new KeyList();
             keyList.Version = 0;
             keyList.Master.Hash = lines[0];
-            keyList.Keys.AddRange(lines.Skip(2).Select(l => new Key { Label = l }));
+            foreach (var line in lines.Skip(2))
+                keyList.Keys.Add(new Key { Label = line });
         }
         else
             keyList = new KeyList();
@@ -95,6 +96,7 @@ public partial class MainWindow : Window
                 // Add new Key to Key List
                 key = new Key { Label = KeysCombo.Text };
                 keyList.Keys.Add(key);
+                KeysCombo.SelectedValue = key;
             }
 
         try
