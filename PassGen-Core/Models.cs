@@ -1,40 +1,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace PassGenCore
+namespace PassGenCore;
+
+public class KeyList
 {
-    public class KeyList
-    {
-        public const int CurrVersion = 2;
+    public const int CurrVersion = 2;
 
-        public int Version { get; set; } = CurrVersion;
+    public int Version { get; set; } = CurrVersion;
 
-        public MasterPassword Master { get; } = new MasterPassword();
+    public MasterPassword Master { get; } = new MasterPassword();
 
-        public List<Key> Keys { get; } = new List<Key>();
-    }
+    public List<Key> Keys { get; } = new();
+}
 
-    public class MasterPassword
-    {
-        public string Hash { get; set; }
+public class MasterPassword
+{
+    public string Hash { get; set; }
 
-        public string Salt { get; set; }
+    public string Salt { get; set; }
 
-        public int IterCount { get; set; } = 1000;
-    }
+    public int IterCount { get; set; } = 1000;
+}
 
-    public class Key
-    {
-        public string Label { get; set; }
+public class Key
+{
+    public string Label { get; set; }
 
-        public GenMode GenMode { get; set; }
+    public GenMode GenMode { get; set; }
 
-        public int? MaxLength { get; set; }
-    }
+    public int? MaxLength { get; set; }
+}
 
-    public enum GenMode
-    {
-        Base64,
-        AlphaNum,
-    }
+public enum GenMode
+{
+    Base64,
+    AlphaNum,
 }
