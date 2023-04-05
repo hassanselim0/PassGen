@@ -17,8 +17,11 @@ namespace PassGenCore
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly string keyListDir = Path.GetDirectoryName(
+            System.Reflection.Assembly.GetExecutingAssembly().Location);
+
         private string keyListName;
-        private string keyListPath => $"{keyListName}.keys.json";
+        private string keyListPath => Path.Combine(keyListDir, $"{keyListName}.keys.json");
         private KeyList keyList;
 
         public MainWindow()
@@ -31,7 +34,7 @@ namespace PassGenCore
                 Converters = new List<JsonConverter> { new StringEnumConverter() },
             };
 
-            var keyLists = Directory.EnumerateFiles(".", "*.keys.json")
+            var keyLists = Directory.EnumerateFiles(keyListDir, "*.keys.json")
                 .Select(f => Path.GetFileName(f.Replace(".keys.json", "")));
 
             KeyListsCombo.ItemsSource = keyLists;

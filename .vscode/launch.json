@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/PassGen-Core/bin/Debug/net6.0-windows/PassGen-Core.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/PassGen-Core/bin/Debug/net6.0-windows/",
+            "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false,
         },
