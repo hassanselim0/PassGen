@@ -31,6 +31,9 @@ def generate_password(master, key):
         master.encode(), msg=input, digestmod=sha256).digest()
     hashed = base64.b64encode(hashed).decode('utf-8')
 
+    if key.gen_mode.lower() == 'base64withsymbol':
+        hashed += '!'
+
     if key.gen_mode.lower() == 'alphanum':
         hashed = ''.join([c for c in hashed if c.isalnum()])
 

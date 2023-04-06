@@ -20,8 +20,12 @@ You can still use this tool along with a regular password manager (for mobile sy
 - A: It's the old security vs convenience balance, also the hash is generated using salted PBKDF2 HMAC-SHA256 (in v2 keylists). However I do intend to add the ability to disable that convenience.
 - **Q: Can I have more than one key list?**
 - A: Yes! You can also pass in the key list name as an argument to the executable to launch the tool with that key list pre-selected and loaded. You can then create shortcuts or batch files pinned in start for each of your key lists, this would let allow you to launch the tool very quickly from Search (Win+S).
-- **Q: How can I customize the password generation?**
-- A: There is currently no UI for this, but you can edit the key file to enforce a max length of the password or to remove symbols from the password. I know, some services have unreasonable limitations on passwords, some are quite dangerous.
+- **Q: My password needs to be shorter, what do I do?**
+- A: Some services have a very small upper limit on password length (which is silly and insecure), you can edit the keylist file and add `"MaxLength": 10` (or any other number) to the relevant key, this will strip the end of the generated password so that it's no longer than the specified length.
+- **Q: My password isn't allowed to have symbols, what do I do?**
+- A: Some services don't allow symbols in passwords (which is also silly and insecure), you can edit the keylist file and add `"GenMode": "AlphaNum"` to the relevant key, this will generate a password that is Base64 encoded but with all the symbols are removed.
+- **Q: My password needs to have symbols, what do I do?**
+- A: Some services require you to add at least one symbol to the password (and for some reason they don't consider `=` to be a symbol), so as of version 1.2 you can edit the keylist file and add `"GenMode": "Base64WithSymbol"` to the relevant key, this will generate a password that is Base64 encoded and has an exclamation mark at the end (sounds unsafe, but it's those damn unreasonable password rules that are actually unsafe!).
 - **Q: What if I need to change my password?**
 - A: In you need to change to a newer password for the same service (eg: the password got leaked or the service detects suspicious logins). You can create a new key for it, or (as of version 1.2) you can edit the keylist file and add `"PasswordChanges": 1` (or any higher number) to the relevant key, this number will be concatenated to the key's label during password generation. And from now on you'll be generating a new password for that key.
 - **Q: How can I synchronize the key list?**

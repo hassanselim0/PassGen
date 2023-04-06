@@ -38,5 +38,6 @@ public class Key
 public enum GenMode
 {
     Base64,
+    Base64WithSymbol,
     AlphaNum,
 }

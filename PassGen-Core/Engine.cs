@@ -22,6 +22,7 @@ public struct Engine
         var pass = key.GenMode switch
         {
             GenMode.Base64 => hashedBytes.ToBase64(),
+            GenMode.Base64WithSymbol => hashedBytes.ToBase64() + "!",
             GenMode.AlphaNum => hashedBytes.ToBase64().Replace("/", "").Replace("+", "").Replace("=", ""),
             _ => throw new Exception("Unexpected GenMode"),
         };
