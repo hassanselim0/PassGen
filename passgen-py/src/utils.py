@@ -23,8 +23,12 @@ def hash_master(password, salt, iter_count):
 
 
 def generate_password(master, key):
+    input = key.label.encode()
+    if key.password_changes:
+        input += str(key.password_changes).encode()
+
     hashed = hmac.new(
-        master.encode(), msg=key.label.encode(), digestmod=sha256).digest()
+        master.encode(), msg=input, digestmod=sha256).digest()
     hashed = base64.b64encode(hashed).decode('utf-8')
 
     if key.gen_mode.lower() == 'alphanum':

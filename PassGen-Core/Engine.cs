@@ -13,12 +13,16 @@ public struct Engine
         if (!CheckMaster(master))
             throw new Exception("Master Password check mismatch!");
 
-        var bytes = new HMACSHA256(master.ToUTF8()).ComputeHash(key.Label.ToUTF8());
+        var inputBytes = key.Label.ToUTF8();
+        if (key.PasswordChanges is not (null or 0))
+            inputBytes = concatBuffers(inputBytes, key.PasswordChanges.ToString().ToUTF8());
+
+        var hashedBytes = new HMACSHA256(master.ToUTF8()).ComputeHash(inputBytes);
 
         var pass = key.GenMode switch
         {
-            GenMode.Base64 => bytes.ToBase64(),
-            GenMode.AlphaNum => bytes.ToBase64().Replace("/", "").Replace("+", "").Replace("=", ""),
+            GenMode.Base64 => hashedBytes.ToBase64(),
+            GenMode.AlphaNum => hashedBytes.ToBase64().Replace("/", "").Replace("+", "").Replace("=", ""),
             _ => throw new Exception("Unexpected GenMode"),
         };
 

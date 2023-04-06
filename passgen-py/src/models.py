@@ -34,23 +34,27 @@ class KeyList:
 
 
 class Key:
-    def __init__(self, label, gen_mode='Base64', max_length=None):
+    def __init__(self, label, gen_mode='Base64', max_length=None, password_changes=None):
         self.label = label
         self.gen_mode = gen_mode
         self.max_length = max_length
+        self.password_changes = password_changes
 
     @classmethod
     def from_dict(cls, obj):
         return cls(
             obj['Label'],
             gen_mode=obj['GenMode'],
-            max_length=obj['MaxLength'])
+            max_length=obj['MaxLength'],
+            password_changes=obj['PasswordChanges'],
+        )
 
     def to_dict(self):
         return {
             "Label": self.label,
             "GenMode": self.gen_mode,
-            "MaxLength": self.max_length
+            "MaxLength": self.max_length,
+            "PasswordChanges": self.password_changes,
         }
 
 

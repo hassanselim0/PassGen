@@ -31,6 +31,8 @@ public class Key
     public GenMode GenMode { get; set; }
 
     public int? MaxLength { get; set; }
+
+    public int? PasswordChanges { get; set; }
 }
 
 public enum GenMode

@@ -22,6 +22,8 @@ You can still use this tool along with a regular password manager (for mobile sy
 - A: Yes! You can also pass in the key list name as an argument to the executable to launch the tool with that key list pre-selected and loaded. You can then create shortcuts or batch files pinned in start for each of your key lists, this would let allow you to launch the tool very quickly from Search (Win+S).
 - **Q: How can I customize the password generation?**
 - A: There is currently no UI for this, but you can edit the key file to enforce a max length of the password or to remove symbols from the password. I know, some services have unreasonable limitations on passwords, some are quite dangerous.
+- **Q: What if I need to change my password?**
+- A: In you need to change to a newer password for the same service (eg: the password got leaked or the service detects suspicious logins). You can create a new key for it, or (as of version 1.2) you can edit the keylist file and add `"PasswordChanges": 1` (or any higher number) to the relevant key, this number will be concatenated to the key's label during password generation. And from now on you'll be generating a new password for that key.
 - **Q: How can I synchronize the key list?**
 - A: This decision is left for the user, depending on how you want to sacrifice security for convenience, you can go from manual sync via encrypted flash drive to auto-sync with Google Drive / OneDrive / Dropbox. If I make it possible to disable storing of the master hash, then the key file would effectively contain no critical secrets.
 - **Q: What are Keylist Versions?**
